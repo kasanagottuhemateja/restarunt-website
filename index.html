@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Restaurant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container container">
+            <h1 class="logo">Sweetheart</h1>
+            <input type="checkbox" id="menu-toggle" />
+            <div class="hamburger-lines">
+                <span class="line line1"></span>
+                <span class="line line2"></span>
+                <span class="line line3"></span>
+            </div>
+            <ul class="menu-items">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#food">Category</a></li>
+                <li><a href="#food-menu">Menu</a></li>
+                <li><a href="#testimonials">Testimonial</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <!-- Update Cart Button -->
+            <button class="btn btn-primary add-to-cart">Cart (<span id="cart-count">0</span>) - ₹<span id="cart-total">0</span></button>
+            <!-- Add Login/Register Button -->
+            <button class="btn btn-secondary" id="login-register-btn" onclick="handleLoginRegister()">Login/Register</button>
+        </div>
+    </nav>
+
+    <!-- Update Cart Modal -->
+    <div id="cart" class="cart-modal">
+        <div class="cart-content">
+            <span class="close-btn">&times;</span>
+            <h2>Your Cart</h2>
+            <div class="cart-items">
+                <!-- Cart items will be added here dynamically -->
+            </div>
+            <div class="cart-summary">
+                <p>Total Items: <span id="total-items">0</span></p>
+                <p>Total Amount: &#8377;<span id="total-amount">0</span></p>
+            </div>
+            <div class="checkout-options">
+                <button class="btn btn-primary checkout-btn">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Payment Modal -->
+    <div id="payment-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Choose Payment Method</h2>
+            <div class="payment-options">
+                <button class="btn btn-secondary payment-option" data-method="credit-card">Credit Card</button>
+                <button class="btn btn-secondary payment-option" data-method="debit-card">Debit Card</button>
+                <button class="btn btn-secondary payment-option" data-method="net-banking">Net Banking</button>
+                <button class="btn btn-secondary payment-option" data-method="upi">UPI</button>
+            </div>
+            <button class="btn btn-primary" id="place-order-btn" style="display: none;">Place Order</button>
+        </div>
+    </div>
+
+    <!-- Add Order Confirmation Modal -->
+    <div id="order-confirmation-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Order Placed Successfully</h2>
+            <div id="order-details">
+                <!-- Order details will be added here dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Login/Register Modal -->
+    <div id="login-register-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div id="login-form">
+                <h2>Login</h2>
+                <form id="login-form-element">
+                    <input type="email" placeholder="Email" required>
+                    <input type="password" placeholder="Password" required>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+                <p>Don't have an account? <a href="#" id="show-register">Register</a></p>
+            </div>
+            <div id="register-form" style="display: none;">
+                <h2>Register</h2>
+                <form id="register-form-element">
+                    <input type="text" placeholder="Name" required>
+                    <input type="email" placeholder="Email" required>
+                    <input type="password" placeholder="Password" required>
+                    <input type="password" placeholder="Confirm Password" required>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+                <p>Already have an account? <a href="#" id="show-login">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+
+    <section class="showcase-area" id="showcase">
+        <div class="showcase-container">
+            <h1 class="main-title" id="home">Savor Healthy Indian Delights</h1>
+            <p>Indulge in wholesome, nutritious Indian cuisine that's good for your health and soul.</p>
+            <a href="#food-menu" class="btn btn-primary">Menu</a>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="about-wrapper container">
+            <div class="about-text">
+                <p class="small">About Us</p>
+                <h2>We've been making healthy food for 10 years</h2>
+                <p>The restaurant has been running successfully for 10 years with the best success rate from the customers.</p>
+            </div>
+            <div class="about-img">
+                <img src="https://tse3.mm.bing.net/th?id=OIP.6e7Vqkbgn6shoQxuQ1zUBQHaEK&pid=Api&P=0&h=180" alt="food" />
+            </div>
+        </div>
+    </section>
+
+    <section id="food">
+        <h2>Types of Food</h2>
+        <div class="food-container container">
+            <div class="food-type fruite">
+                <div class="img-container">
+                    <img src="https://tse1.mm.bing.net/th?id=OIP.F0wSkwfP1ODfH1-tLW9O4gAAAA&pid=Api&P=0&h=180" alt="North Indian" />
+                    <div class="img-content">
+                        <h3>North Indian</h3>
+                        <a href="https://r.search.yahoo.com/_ylt=AwrKAR4Qs85mQQQAH6S7HAx.;_ylu=Y29sbwNzZzMEcG9zAzEEdnRpZAMEc2VjA3Ny/RV=2/RE=1726031889/RO=10/RU=https%3a%2f%2fwww.tasteatlas.com%2fbest-rated-dishes-in-northern-india/RK=2/RS=7fhlF7fvYwnAr5Vv9gWu2QzTj7Q-" class="btn btn-primary" target="_blank">Learn more</a>
+                    </div>
+                </div>
+            </div>
+            <div class="food-type vegetable">
+                <div class="img-container">
+                    <img src="https://tse4.mm.bing.net/th?id=OIP.-svZEga8U5-_mhgo-99iYQHaFj&pid=Api&P=0&h=180" alt="South Indian" />
+                    <div class="img-content">
+                        <h3>South Indian</h3>
+                        <a href="https://r.search.yahoo.com/_ylt=Awrx.2xTs85meAQAgkK7HAx.;_ylu=Y29sbwNzZzMEcG9zAzMEdnRpZAMEc2VjA3Ny/RV=2/RE=1726031955/RO=10/RU=https%3a%2f%2fwww.antoskitchen.com%2fsouth-indian-food-recipes%2f/RK=2/RS=cR10BjOanAXrXKFexMpPi287YnQ-" class="btn btn-primary" target="_blank">Learn more</a>
+                    </div>
+                </div>
+            </div>
+            <div class="food-type grin">
+                <div class="img-container">
+                    <img src="https://tse1.mm.bing.net/th?id=OIP.RWPQCmOeMUrbgZDQQ73dNQHaDO&pid=Api&P=0&h=180" alt="Asian" />
+                    <div class="img-content">
+                        <h3>Asian</h3>
+                        <a href="https://r.search.yahoo.com/_ylt=AwrKArSXs85mbQQAX3G7HAx.;_ylu=Y29sbwNzZzMEcG9zAzEEdnRpZAMEc2VjA3Ny/RV=2/RE=1726032023/RO=10/RU=https%3a%2f%2fwww.chefspencil.com%2f35-asian-foods-to-try-at-least-once%2f/RK=2/RS=v5iSmtgkHXHLuBIgshZByKlalx0-" class="btn btn-primary" target="_blank">Learn more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="food-menu">
+        <h2 class="food-menu-heading">Food Menu</h2>
+        <div class="food-menu-container container">
+            <div class="food-menu-item">
+                <div class="food-img">
+                    <img src="https://tse3.mm.bing.net/th?id=OIP.buauc-IULuAri90twnRs5wHaE7&pid=Api&P=0&h=180" alt="Hyderabadi Chicken Dum Biryani" />
+                </div>
+                <div class="food-description">
+                    <h2 class="food-title">Hyderabadi Chicken Dum Biryani</h2>
+                    <p>Delicious Hyderabadi chicken dum biryani.</p>
+                    <p class="food-price">Price: &#8377; 250</p>
+                    <button class="btn btn-primary add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="food-menu-item">
+                <div class="food-img">
+                    <img src="https://tse3.mm.bing.net/th?id=OIP.huYrCVuOYF_AUh_1vueCdwHaJ4&pid=Api&P=0&h=180" alt="Dosa, Idli, and Wada" />
+                </div>
+                <div class="food-description">
+                    <h2 class="food-title">Dosa, Idli, and Wada</h2>
+                    <p>Traditional South Indian dishes.</p>
+                    <p class="food-price">Price: &#8377; 150</p>
+                    <button class="btn btn-primary add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            <div class="food-menu-item">
+                <div class="food-img">
+                    <img src="https://tse4.mm.bing.net/th?id=OIP.Kvucbnx17O0l9MxuRenh3AHaE5&pid=Api&P=0&h=180" alt="Chola Bhatura" />
+                </div>
+                <div class="food-description">
+                    <h2 class="food-title">Chola Bhatura</h2>
+                    <p>Spicy and fluffy Chola Bhatura.</p>
+                    <p class="food-price">Price: &#8377; 150</p>
+                    <button class="btn btn-primary add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            <div class="food-menu-item">
+                <div class="food-img">
+                    <img src="https://tse4.mm.bing.net/th?id=OIP.sYTwBYL7L-JFL24zJ4BL-QHaD8&pid=Api&P=0&h=180" alt="Butter Chicken" />
+                </div>
+                <div class="food-description">
+                    <h2 class="food-title">Butter Chicken</h2>
+                    <p>Creamy and spicy Butter Chicken.</p>
+                    <p class="food-price">Price: &#8377; 250</p>
+                    <button class="btn btn-primary add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            <div class="food-menu-item">
+                <div class="food-img">
+                    <img src="https://www.chefspencil.com/wp-content/uploads/Ramen--960x960.jpeg.webp" alt="Ramen" />
+                </div>
+                <div class="food-description">
+                    <h2 class="food-title">Ramen</h2>
+                    <p>Delicious and savory Ramen.</p>
+                    <p class="food-price">Price: &#8377; 200</p>
+                    <button class="btn btn-primary add-to-cart"> Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="testimonials">
+        <h2 class="testimonial-title">What Our Customers Say</h2>
+        <div class="testimonial-container container">
+            <div class="testimonial-box">
+                <div class="customer-detail">
+                    <div class="customer-photo">
+                        <img src="1.jpg" alt="" />
+                        <p class="customer-name">MA.azeem</p>
+                    </div>
+                </div>
+                <div class="star-rating">
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                </div>
+                <p class="testimonial-text">
+                    I had an incredible dining experience at Sweetheart Indian Restaurant! The moment we walked in, we were greeted warmly by the staff. The ambiance is cozy and inviting, with beautiful Indian décor that sets the mood perfectly. The menu offers a wide variety of dishes, and everything we tried was bursting with flavor. The Chicken Tikka Masala was a standout—tender chicken in a creamy, perfectly spiced sauce. The Naan was fresh and soft, just how I like it. Our server was attentive and knowledgeable, offering great recommendations. The prices were reasonable for the quality of the food. I can’t wait to come back and try more dishes!
+                </p>
+
+            </div>
+            <div class="testimonial-box">
+                <div class="customer-detail">
+                    <div class="customer-photo">
+                        <img src="2.jpg" alt="" />
+                        <p class="customer-name">V.Akhila</p>
+                    </div>
+                </div>
+                <div class="star-rating">
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                </div>
+                <p class="testimonial-text">
+                    Sweetheart Indian Restaurant serves some of the best Indian food I've had in a while. The chicken biryani was fragrant and flavorful, and the paneer tikka was deliciously grilled. The food was definitely worth the wait, but the service was a bit slow. We had to wait a while for our appetizers to arrive, and our main course took longer than expected. However, the staff was friendly and apologized for the delay. The restaurant itself is charming, with a warm and welcoming atmosphere. Overall, I’d recommend this place for the food, just be prepared for a longer dining experience.
+
+
+                </p>
+
+            </div>
+            <div class="testimonial-box">
+                <div class="customer-detail">
+                    <div class="customer-photo">
+                        <img src="3.jpg" alt="" />
+                        <p class="customer-name">S.varun</p>
+                    </div>
+                </div>
+                <div class="star-rating">
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                </div>
+                <p class="testimonial-text">
+                    Sweetheart Indian Restaurant has quickly become one of my favorite spots for Indian cuisine. From the moment we entered, the service was top-notch—our server was incredibly attentive and made sure we were well taken care of. We started with the samosas, which were crispy and packed with spicy, flavorful filling. For the main course, the Butter Chicken and Chana Masala were both exceptional. The flavors were authentic and the spice levels were perfect. The restaurant has a lovely, relaxed vibe, making it a great place for both casual meals and special occasions. Highly recommend it for anyone craving genuine Indian food!
+                </p>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <div class="contact-img">
+            <img src="https://cdn.shopify.com/s/files/1/0560/5893/7552/files/Contact_Us_header_c22c42b4-a9e1-4cb2-99f0-0a57a032000b_1200x.png?v=1620760636" alt="" />
+        </div>
+        <div class="contact-wrapper container">
+            <div class="contact-info">
+                <p>Address: Hyderabad hitech-City</p>
+                <p>Email: sweetHeart@restaurant.com</p>
+                <p>Phone: 9848697822</p>
+            </div>
+            <div class="contact-form">
+                <form action="#" method="post">
+                    <input type="text" name="name" placeholder="Your Name" required />
+                    <input type="email" name="email" placeholder="Your Email" required />
+                    <textarea name="message" placeholder="Your Message" required></textarea>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Sweetheart Restaurant. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.querySelector('.add-to-cart').addEventListener('click', function () {
+            document.querySelector('#cart').style.display = 'block';
+        });
+
+        document.querySelector('.close-btn').addEventListener('click', function () {
+            document.querySelector('#cart').style.display = 'none';
+        });
+    </script>
+    <script>
+        // Track cart items
+        const cart = [];
+
+        // Update cart modal function
+        function updateCart() {
+            const cartItemsContainer = document.querySelector('.cart-items');
+            cartItemsContainer.innerHTML = ''; // Clear existing items
+            cart.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'cart-item';
+                itemElement.innerHTML = `
+                    <p>${item.name} - &#8377; ${item.price}</p>
+                `;
+                cartItemsContainer.appendChild(itemElement);
+            });
+        }
+
+        // Event listener for adding items to the cart
+        document.querySelectorAll('.food-menu-item button').forEach(button => {
+            button.addEventListener('click', function () {
+                const foodItem = this.parentElement;
+                const name = foodItem.querySelector('.food-title').innerText;
+                const price = foodItem.querySelector('.food-price').innerText.replace('Price: &#8377; ', '');
+                
+                // Add item to cart
+                cart.push({ name, price });
+                
+                // Show cart modal
+                document.querySelector('#cart').style.display = 'block';
+                
+                // Update cart items
+                updateCart();
+            });
+        });
+        document.querySelector('.checkout-btn').addEventListener('click', function () {
+            // Hide the cart modal
+            document.querySelector('#cart').style.display = 'none';
+            
+            // Show success message
+            document.querySelector('#success-message').style.display = 'block';
+        });
+    </script>
+    <script>
+    function handleLoginRegister() {
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        if (isLoggedIn) {
+            localStorage.setItem('isLoggedIn', 'false');
+            alert('Logged out successfully!');
+            location.reload(); // Reload the page to update the UI
+        } else {
+            window.location.href = 'login-register.html';
+        }
+    }
+    </script>
+</body>
+
+</html>
